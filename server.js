@@ -25,7 +25,7 @@ const app = express();
 app.use(express.json());
 app.use(
   cors({
-    origin: true,
+    origin: "https://notepro-eight.vercel.app",
     credentials: true,
   })
 );
@@ -34,6 +34,10 @@ app.use(cookieParser());
 connecToDb();
 
 //routes
+app.get('/' , (req,res)=>{
+  res.send("Hello world")
+})
+
 app.post("/signup", signup);
 app.post("/login", login);
 app.get("/logout", logout);
