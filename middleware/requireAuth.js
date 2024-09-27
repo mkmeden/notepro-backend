@@ -4,12 +4,12 @@ const User = require("../models/user");
 async function requireAuth(req, res, next) {
   try {
     //read token off cookies
-    const token = req.cookies.Authoriztion;
+    const token = req.cookies.Authorization;
     console.log(token)
 //decode the token
     var decoded = jwt.verify(token, process.env.SECRET);
     //find user using decoded sub
-    if(Date.now() > decoded.exp)
+    if(Date.now()/1000 > decoded.exp)
         return res.sendStatus(401);
 
     const user = await User.findById(decoded.sub);
