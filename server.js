@@ -25,7 +25,8 @@ const app = express();
 app.use(express.json());
 app.use(
   cors({
-    origin: "https://notepro-eight.vercel.app",
+    origin: process.env.NODE_ENV === "production"?"https://notepro-eight.vercel.app": true,
+    methods: "GET,POST,PUT,DELETE",
     credentials: true,
   })
 );

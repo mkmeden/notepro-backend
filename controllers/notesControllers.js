@@ -3,13 +3,19 @@ const Note = require("../models/note");
 const createNote = async (req, res) => {
   const title = req.body.title;
   const body = req.body.body;
-  const note = await Note.create({
-    title: title,
-    body: body,
-    user: req.user._id,
-  });
 
-  res.json({ note: note });
+  try {
+    const note = await Note.create({
+      title: title,
+      body: body,
+      user: req.user._id,
+    });
+
+    res.json({ note: note });
+  } catch (error) {
+    
+    res.json({message : error.message})
+  }
 };
 const fetchNotes = async (req, res) => {
   console.log(req.user._id);
@@ -44,12 +50,11 @@ const updateNote = async (req, res) => {
       }
     );
     const note = await Note.findById(id);
-  
+
     res.json({ note: note });
   } catch (error) {
-    console.log(error.message)
+    console.log(error.message);
   }
-
 };
 const deleteNote = async (req, res) => {
   const id = req.params.id;
