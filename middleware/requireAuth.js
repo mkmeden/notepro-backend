@@ -3,16 +3,20 @@ const User = require("../models/user");
 
 async function requireAuth(req, res, next) {
   try {
+    console.log("step1")
+
     //read token off cookies
     const token = req.cookies.Authorization;
-    console.log(token)
+    console.log("step2" ,token)
 //decode the token
     var decoded = jwt.verify(token, process.env.SECRET);
     //find user using decoded sub
     if(Date.now()/1000 > decoded.exp)
         return res.sendStatus(401);
+    console.log("step3")
 
     const user = await User.findById(decoded.sub);
+    console.log("step4")
 
     if (!user) return res.sendStatus(401);
 
@@ -24,6 +28,7 @@ async function requireAuth(req, res, next) {
 
     next();
   } catch (error) {
+    console.log("step5 error")
         
     res.status(400).json({error : "Unauthorized"})
   }
