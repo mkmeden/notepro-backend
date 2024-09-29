@@ -42,6 +42,7 @@ const login = async (req, res) => {
       httpOnly: true,
       sameSite: "lax",
       secure: process.env.NODE_ENV === "production",
+      domain: "https://notepro-eight.vercel.app/"
     });
     res.status(200).json({ user });
   } catch (error) {
