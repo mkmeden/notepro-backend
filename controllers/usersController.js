@@ -42,7 +42,6 @@ const login = async (req, res) => {
       httpOnly: true,
       sameSite: "lax",
       secure: process.env.NODE_ENV === "production",
-      domain: "https://notepro-eight.vercel.app/"
     });
     res.status(200).json({ user });
   } catch (error) {
@@ -52,7 +51,7 @@ const login = async (req, res) => {
 };
 
 const logout = (req, res) => {
-  res.clearCookie("Authoriztion");
+  res.clearCookie("Authorization");
   res.sendStatus(200);
 };
 
