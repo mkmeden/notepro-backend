@@ -17,11 +17,22 @@ const app = express();
 app.use(express.json());
 app.use(
   cors({
-    origin: process.env.NODE_ENV === "production" ? "https://notepro-eight.vercel.app" : true,
+    origin: (origin, callback) => {
+      const allowedOrigins = [
+        "https://notepro-eight.vercel.app",
+        "http://localhost:3001",
+      ];
+      if (allowedOrigins.includes(origin)) {
+        callback(null, true);
+      } else {
+        callback(new Error("Not allowed by CORS"));
+      }
+    },
     methods: "GET,POST,PUT,DELETE,OPTIONS",
     credentials: true, // Allow credentials (cookies)
   })
 );
+
 app.options("*", cors()); // Handle preflight requests
 
 app.use(cookieParser());
